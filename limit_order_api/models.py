@@ -1,14 +1,18 @@
-from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, Integer, Float
 from pydantic import BaseModel
+from limit_order_api.db import Base
 
-Base = declarative_base()
 
-
-class OrderRequest(BaseModel):
+class PlaceOrderRequest(BaseModel):
     quantity: int
     price: float
     side: int
+
+
+class ModifyOrderRequest(BaseModel):
+    order_id: int
+    updated_quantity: int
+    updated_price: float
 
 
 class Order(Base):
