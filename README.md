@@ -29,6 +29,8 @@ limit-order-api is an api that provides order book functionality for trading.
 - Easy to use REST API.
 - OpenAPI documentation included.
 - Easy setup and package management with Poetry.
+- Implemented with Test Driven Development (>90% Coverage).
+- Fast and powerful CI with GitHub actions.
 
 ## ⚡ Setup
 
@@ -81,7 +83,7 @@ poetry run pytest --cov=limit_order_api
 
 ### ✅ To-Do
 
-- [ ] Add a trade execution system as a separate service.
+- [ ] Add a trade execution and publisher system as a separate service.
 - [ ] Setup docker compose for easy deployment and testing.
 
 ## 🧑‍💻 Behind The Code
