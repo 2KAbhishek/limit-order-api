@@ -53,10 +53,6 @@ git clone https://github.com/2kabhishek/limit-order-api
 cd limit-order-api
 # install dependencies
 poetry install
-# run tests
-poetry run pytest
-# run tests with coverage
-poetry run pytest --cov=limit_order_api
 # run server
 poetry run uvicorn limit_order_api.main:app --reload
 # or
@@ -65,11 +61,23 @@ poetry run dev
 
 ## 🚀 Usage
 
+### 📦 Commands
+
 ```bash
-USAGE:
-    limit-order-api [FLAGS] [OPTIONS]
-Example:
-    limit-order-api
+# database migrations
+poetry run alembic upgrade head
+
+# create a new migration
+poetry run alembic revision --autogenerate -m "migration message"
+
+# migration history
+poetry run alembic history
+
+# run tests
+poetry run pytest
+
+# run tests with coverage
+poetry run pytest --cov=limit_order_api
 ```
 
 ## 🏗️ What's Next
