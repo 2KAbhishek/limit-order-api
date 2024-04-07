@@ -11,6 +11,15 @@ from limit_order_api.models import (
 router = APIRouter()
 
 
+def has_trade(order, session):
+    bid_order = select(Trade).where(Trade.bid_order_id == order.id)
+    ask_order = select(Trade).where(Trade.ask_order_id == order.id)
+    if any(session.execute(bid_order)) or any(session.execute(ask_order)):
+        return False
+
+    return True
+
+
 @router.post("/place_order")
 async def place_order(order: PlaceOrderRequest):
     quantity = order.quantity
@@ -55,11 +64,27 @@ async def cancel_order(order_id: int):
         if order is None:
             return {"success": False}
 
-        bid_order = select(Trade).where(Trade.bid_order_id == order_id)
-        ask_order = select(Trade).where(Trade.ask_order_id == order_id)
-        if any(session.execute(bid_order)) or any(session.execute(ask_order)):
+        if not has_trade(order, session):
             return {"success": False}
 
         session.delete(order)
         session.commit()
         return {"success": True}
+
+
+@router.get("/fetch_order/{order_id}")
+async def fetch_order(order_id: int):
+    with SessionLocal() as session:
+        order = session.get(Order, order_id)
+        if order is None:
+            raise HTTPException(status_code=404, detail="Order not found")
+
+        order_alive = has_trade(order, session)
+        avg_price = order.price / order.quantity
+
+        return {
+            "order_id": order.id,
+            "order_quantity": order.quantity,
+            "average_traded_price": avg_price,
+            "order_alive": order_alive,
+        }
