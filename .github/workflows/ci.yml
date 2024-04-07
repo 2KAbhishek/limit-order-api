@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-  
+
     runs-on: ubuntu-latest
 
     steps:
@@ -36,4 +36,4 @@ jobs:
         poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        poetyr run pytest --cov=limit_order_api
+        poetry run pytest --cov=limit_order_api
