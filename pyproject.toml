@@ -11,6 +11,8 @@ python = "^3.10"
 fastapi = "^0.110.1"
 uvicorn = "^0.29.0"
 
+[tool.poetry.scripts]
+dev = "limit_order_api.main:start"
 
 [build-system]
 requires = ["poetry-core"]
