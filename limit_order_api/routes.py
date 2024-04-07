@@ -88,3 +88,18 @@ async def fetch_order(order_id: int):
             "average_traded_price": avg_price,
             "order_alive": order_alive,
         }
+
+
+@router.get("/fetch_all_orders")
+async def fetch_all_orders():
+    with SessionLocal() as session:
+        orders = session.query(Order).all()
+        return [
+            {
+                "order_id": order.id,
+                "order_quantity": order.quantity,
+                "price": order.price,
+                "side": order.side,
+            }
+            for order in orders
+        ]
