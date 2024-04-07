@@ -20,61 +20,58 @@
 <a href="https://github.com/2KAbhishek/limit-order-api/pulse">
 <img alt="Last Updated" src="https://img.shields.io/github/last-commit/2kabhishek/limit-order-api?style=flat&color=e06c75&label="> </a>
 
-<h3>Short Sweet Headline 🎇🎉</h3>
-
-<figure>
-  <img src="images/screenshot.png" alt="limit-order-api in action">
-  <br/>
-  <figcaption>limit-order-api in action</figcaption>
-</figure>
+<h3>Order Book API in Python 📈💰</h3>
 
 </div>
 
-limit-order-api is a `<utility/tool>` that allows `<target_audience>` to `<action>`.
+limit-order-api is an api that provides order book functionality for trading.
 
-## ✨ Features
-
-- Comes with a ready to go README template
-- Works with [mkrepo](https://github.com/2kabhishek/mkrepo)
+- Easy to use REST API.
+- OpenAPI documentation included.
+- Easy setup and package management with Poetry.
 
 ## ⚡ Setup
 
 ### ⚙️ Requirements
 
-- foo >= bar
-- bazz
+- Python 3.10+
+- [Poetry](https://python-poetry.org/docs/) (run `curl -sSL https://install.python-poetry.org | python3 -`)
 
-### 💻 Installation
+### 💻 Setup
 
-Installing limit-order-api is as simple as cloning and symlinking!
+Setting up limit-order-api is as simple as cloning and running the server.
 
 ```bash
 git clone https://github.com/2kabhishek/limit-order-api
 cd limit-order-api
+
 # install dependencies
 poetry install
+
+# database migrations
+poetry run alembic upgrade head
+
+# run tests
+poetry run pytest
+
 # run server
 poetry run uvicorn limit_order_api.main:app --reload
 # or
 poetry run dev
 ```
 
+The Open API documentation is available at `http://localhost:8000/docs` once the server is running.
+
 ## 🚀 Usage
 
-### 📦 Commands
+### 📦 More Commands
 
 ```bash
-# database migrations
-poetry run alembic upgrade head
-
 # create a new migration
 poetry run alembic revision --autogenerate -m "migration message"
 
 # migration history
 poetry run alembic history
-
-# run tests
-poetry run pytest
 
 # run tests with coverage
 poetry run pytest --cov=limit_order_api
@@ -82,36 +79,25 @@ poetry run pytest --cov=limit_order_api
 
 ## 🏗️ What's Next
 
-Planning to add `<feature/module>`.
-
 ### ✅ To-Do
 
-- [x] Setup repo
-- [ ] Think real hard
-- [ ] Start typing
+- [ ] Add a trade execution system as a separate service.
+- [ ] Setup docker compose for easy deployment and testing.
 
 ## 🧑‍💻 Behind The Code
 
 ### 🌈 Inspiration
 
-limit-order-api was inspired by `<reason/idea>`.
+Learning more about trading systems and trying out some python libs.
 
 ### 💡 Challenges/Learnings
 
-- The main challenges were `<issue/difficulty>`
-- I learned about `<learning/accomplishment>`
+- FastAPI with Poetry, Alembic, and SQLAlchemy was interesting to setup.
 
 ### 🧰 Tooling
 
 - [dots2k](https://github.com/2kabhishek/dots2k) — Dev Environment
 - [nvim2k](https://github.com/2kabhishek/nvim2k) — Personalized Editor
-- [sway2k](https://github.com/2kabhishek/sway2k) — Desktop Environment
-- [qute2k](https://github.com/2kabhishek/qute2k) — Personalized Browser
-
-### 🔍 More Info
-
-- [shelly](https://github.com/2kabhishek/shelly) — Command line template
-- [tiny-web](https://github.com/2kabhishek/tiny-web) — Web app template
 
 <hr>
 
