@@ -51,7 +51,16 @@ Installing limit-order-api is as simple as cloning and symlinking!
 ```bash
 git clone https://github.com/2kabhishek/limit-order-api
 cd limit-order-api
-<install_command>
+# install dependencies
+poetry install
+# run tests
+poetry run pytest
+# run tests with coverage
+poetry run pytest --cov=limit_order_api
+# run server
+poetry run uvicorn limit_order_api.main:app --reload
+# or
+poetry run dev
 ```
 
 ## 🚀 Usage
