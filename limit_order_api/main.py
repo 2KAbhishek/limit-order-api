@@ -1,9 +1,20 @@
+import alembic.config
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from uvicorn import run
 from fastapi.openapi.utils import get_openapi
+from uvicorn import run
+
+from limit_order_api.db import database
+from limit_order_api.routes import router as order_router
 
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        await database.connect()
+        yield
+    finally:
+        await database.disconnect()
 
 
 def custom_openapi():
@@ -19,8 +30,11 @@ def custom_openapi():
     return app.openapi_schema
 
 
-app.openapi = custom_openapi
-
-
 def start():
     run("limit_order_api.main:app", host="0.0.0.0", port=8000, reload=True)
+
+
+app = FastAPI(title="limit-order-api", lifespan=lifespan)
+alembic.config.main(argv=["upgrade", "head"])
+app.include_router(order_router)
+app.openapi = custom_openapi
