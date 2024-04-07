@@ -1,6 +1,12 @@
 from fastapi import APIRouter, HTTPException
 from limit_order_api.db import SessionLocal
-from limit_order_api.models import Order, PlaceOrderRequest, ModifyOrderRequest
+from sqlalchemy import select
+from limit_order_api.models import (
+    Order,
+    Trade,
+    PlaceOrderRequest,
+    ModifyOrderRequest,
+)
 
 router = APIRouter()
 
@@ -40,3 +46,20 @@ async def modify_order(order: ModifyOrderRequest):
         session.commit()
 
     return {"success": True}
+
+
+@router.delete("/cancel_order/{order_id}")
+async def cancel_order(order_id: int):
+    with SessionLocal() as session:
+        order = session.get(Order, order_id)
+        if order is None:
+            return {"success": False}
+
+        bid_order = select(Trade).where(Trade.bid_order_id == order_id)
+        ask_order = select(Trade).where(Trade.ask_order_id == order_id)
+        if any(session.execute(bid_order)) or any(session.execute(ask_order)):
+            return {"success": False}
+
+        session.delete(order)
+        session.commit()
+        return {"success": True}
